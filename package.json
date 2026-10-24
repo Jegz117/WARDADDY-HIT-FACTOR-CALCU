@@ -4,9 +4,8 @@
   "description": "IPSC Action Air Hit Factor Calculator for WarDaddy HiCapa Builds",
   "main": "index.html",
   "scripts": {
-    "start": "serve .",
     "dev": "python -m http.server 8199",
-    "build": "echo 'Static site ready for Vercel deployment'"
+    "start": "npx serve ."
   },
   "keywords": [
     "ipsc",
