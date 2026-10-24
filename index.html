@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WarDaddy HiCapa Builds | IPSC Action Air Hit Factor Calculator</title>
+  <meta name="description" content="Precision scoring system and Hit Factor calculator for IPSC Action Air competitors. Calculate hit factors, track runs, and export match logs.">
+  
+  <!-- Modern Tactical Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e31b23'><rect x='2' y='2' width='20' height='20' rx='3'/></svg>">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="nav-brand">
+      <span class="brand-square"></span>
+      <span class="brand-text">WARDADDY HICAPA BUILDS</span>
+    </div>
+    <div class="nav-tagline">
+      IPSC ACTION AIR &middot; MATCH TOOL
+    </div>
+  </header>
+
+  <main class="app-container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <span class="section-kicker">PRECISION SCORING SYSTEM</span>
+        <h1 class="hero-title">
+          <span class="title-white">HIT FACTOR</span>
+          <span class="title-red">CALCULATOR</span>
+        </h1>
+        <p class="hero-description">
+          Score clean. Move fast. Track every run. Built for IPSC Action Air competitors.
+        </p>
+      </div>
+
+      <div class="hero-art-wrapper">
+        <img 
+          src="assets/wardaddy-logo.jpg" 
+          alt="WarDaddy HiCapa Builds Race Pistol" 
+          class="hero-art-image"
+          id="heroArtImg"
+          width="1024"
+          height="824"
+          loading="eager"
+        >
+      </div>
+    </section>
+
+    <!-- Scoring & Result Grid -->
+    <section class="scoring-layout">
+      <!-- Left Column: Score Entry Form -->
+      <div class="score-entry-card">
+        <div class="section-header">
+          <span class="section-kicker">SCORE ENTRY</span>
+          <h2 class="section-title">CURRENT RUN</h2>
+        </div>
+
+        <form id="scoreForm" onsubmit="event.preventDefault();">
+          <!-- Shooter & Stage Row -->
+          <div class="form-row two-cols">
+            <div class="input-group">
+              <label for="shooterInput">SHOOTER</label>
+              <input 
+                type="text" 
+                id="shooterInput" 
+                placeholder="Enter full name" 
+                autocomplete="name"
+                spellcheck="false"
+              >
+            </div>
+            <div class="input-group">
+              <label for="stageInput">STAGE</label>
+              <input 
+                type="text" 
+                id="stageInput" 
+                placeholder="Stage name or number" 
+                autocomplete="off"
+                spellcheck="false"
+              >
+            </div>
+          </div>
+
+          <!-- Division Row -->
+          <div class="form-row">
+            <div class="input-group">
+              <label for="divisionSelect">DIVISION</label>
+              <div class="custom-select-wrapper">
+                <select id="divisionSelect">
+                  <option value="Open" selected>Open</option>
+                  <option value="Standard">Standard</option>
+                  <option value="Production">Production</option>
+                  <option value="Production Optics">Production Optics</option>
+                  <option value="Classic">Classic</option>
+                </select>
+                <svg class="select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Target Scoring Counter Grid (3 cols x 2 rows) -->
+          <div class="counter-grid">
+            <!-- ALPHA -->
+            <div class="counter-card" data-key="alpha" id="cardAlpha">
+              <div class="counter-header">
+                <span class="counter-label">ALPHA</span>
+                <span class="counter-badge positive">5 PTS</span>
+              </div>
+              <div class="counter-controls">
+                <button type="button" class="btn-step dec" aria-label="Decrease Alpha" onclick="adjustCount('alpha', -1)">−</button>
+                <input type="number" id="inputAlpha" class="counter-value" value="0" min="0" max="99" oninput="onDirectCountChange('alpha', this.value)">
+                <button type="button" class="btn-step inc" aria-label="Increase Alpha" onclick="adjustCount('alpha', 1)">+</button>
+              </div>
+            </div>
+
+            <!-- CHARLIE -->
+            <div class="counter-card" data-key="charlie" id="cardCharlie">
+              <div class="counter-header">
+                <span class="counter-label">CHARLIE</span>
+                <span class="counter-badge positive">3 PTS</span>
+              </div>
+              <div class="counter-controls">
+                <button type="button" class="btn-step dec" aria-label="Decrease Charlie" onclick="adjustCount('charlie', -1)">−</button>
+                <input type="number" id="inputCharlie" class="counter-value" value="0" min="0" max="99" oninput="onDirectCountChange('charlie', this.value)">
+                <button type="button" class="btn-step inc" aria-label="Increase Charlie" onclick="adjustCount('charlie', 1)">+</button>
+              </div>
+            </div>
+
+            <!-- DELTA -->
+            <div class="counter-card" data-key="delta" id="cardDelta">
+              <div class="counter-header">
+                <span class="counter-label">DELTA</span>
+                <span class="counter-badge positive">1 PT</span>
+              </div>
+              <div class="counter-controls">
+                <button type="button" class="btn-step dec" aria-label="Decrease Delta" onclick="adjustCount('delta', -1)">−</button>
+                <input type="number" id="inputDelta" class="counter-value" value="0" min="0" max="99" oninput="onDirectCountChange('delta', this.value)">
+                <button type="button" class="btn-step inc" aria-label="Increase Delta" onclick="adjustCount('delta', 1)">+</button>
+              </div>
+            </div>
+
+            <!-- MISS -->
+            <div class="counter-card penalty" data-key="miss" id="cardMiss">
+              <div class="counter-header">
+                <span class="counter-label">MISS</span>
+                <span class="counter-badge penalty">-10</span>
+              </div>
+              <div class="counter-controls">
+                <button type="button" class="btn-step dec" aria-label="Decrease Miss" onclick="adjustCount('miss', -1)">−</button>
+                <input type="number" id="inputMiss" class="counter-value" value="0" min="0" max="99" oninput="onDirectCountChange('miss', this.value)">
+                <button type="button" class="btn-step inc" aria-label="Increase Miss" onclick="adjustCount('miss', 1)">+</button>
+              </div>
+            </div>
+
+            <!-- NO SHOOT -->
+            <div class="counter-card penalty" data-key="noShoot" id="cardNoShoot">
+              <div class="counter-header">
+                <span class="counter-label">NO SHOOT</span>
+                <span class="counter-badge penalty">-10</span>
+              </div>
+              <div class="counter-controls">
+                <button type="button" class="btn-step dec" aria-label="Decrease No Shoot" onclick="adjustCount('noShoot', -1)">−</button>
+                <input type="number" id="inputNoShoot" class="counter-value" value="0" min="0" max="99" oninput="onDirectCountChange('noShoot', this.value)">
+                <button type="button" class="btn-step inc" aria-label="Increase No Shoot" onclick="adjustCount('noShoot', 1)">+</button>
+              </div>
+            </div>
+
+            <!-- PROCEDURAL -->
+            <div class="counter-card penalty" data-key="procedural" id="cardProcedural">
+              <div class="counter-header">
+                <span class="counter-label">PROCEDURAL</span>
+                <span class="counter-badge penalty">-10</span>
+              </div>
+              <div class="counter-controls">
+                <button type="button" class="btn-step dec" aria-label="Decrease Procedural" onclick="adjustCount('procedural', -1)">−</button>
+                <input type="number" id="inputProcedural" class="counter-value" value="0" min="0" max="99" oninput="onDirectCountChange('procedural', this.value)">
+                <button type="button" class="btn-step inc" aria-label="Increase Procedural" onclick="adjustCount('procedural', 1)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Time & Save Button Row -->
+          <div class="form-row time-save-row">
+            <div class="input-group time-group">
+              <label for="timeInput">TIME (SECONDS)</label>
+              <div class="time-input-container">
+                <input 
+                  type="text" 
+                  id="timeInput" 
+                  value="0.00" 
+                  placeholder="0.00" 
+                  inputmode="decimal"
+                  autocomplete="off"
+                >
+                <span class="time-unit">SEC</span>
+                <button type="button" class="timer-quick-btn" id="stopwatchToggleBtn" title="Toggle Range Stopwatch">
+                  ⏱️
+                </button>
+              </div>
+            </div>
+
+            <div class="action-buttons-group">
+              <button type="button" id="saveScoreBtn" class="btn-save-score" onclick="saveCurrentRun()">
+                SAVE SCORE
+              </button>
+              <button type="button" id="resetFormBtn" class="btn-reset-form" title="Reset Current Entry" onclick="resetForm()">
+                CLEAR
+              </button>
+            </div>
+          </div>
+
+          <!-- Built-in Range Stopwatch Overlay (Collapsible) -->
+          <div id="stopwatchWidget" class="stopwatch-widget hidden">
+            <div class="stopwatch-meta">
+              <span class="stopwatch-badge">IPSC MATCH SHOT TIMER</span>
+              <div class="stopwatch-display" id="stopwatchDisplay">00:00.00</div>
+            </div>
+            <div class="stopwatch-controls">
+              <button type="button" id="swStartBtn" class="sw-btn primary" onclick="toggleStopwatch()">
+                START
+              </button>
+              <button type="button" id="swApplyBtn" class="sw-btn" onclick="applyStopwatchTime()">
+                USE TIME
+              </button>
+              <button type="button" id="swResetBtn" class="sw-btn" onclick="resetStopwatch()">
+                RESET
+              </button>
+              <button type="button" id="swTestBuzzerBtn" class="sw-btn buzzer-test" title="Test High-Volume Competition Buzzer" onclick="testBuzzerAudio()">
+                📢 TEST BUZZER
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right Column: Calculated Result Card -->
+      <aside class="result-card" id="resultCard">
+        <div class="result-header">
+          <span class="result-kicker">CALCULATED RESULT</span>
+          <span class="result-title">HIT FACTOR</span>
+        </div>
+
+        <div class="result-factor-display">
+          <span id="hitFactorValue" class="factor-digits">0.0000</span>
+        </div>
+
+        <div class="result-breakdown">
+          <div class="breakdown-row">
+            <span class="breakdown-label">Raw points</span>
+            <span id="rawPointsValue" class="breakdown-value">0</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="breakdown-label">Penalties</span>
+            <span id="penaltiesValue" class="breakdown-value">-0</span>
+          </div>
+          <div class="breakdown-divider"></div>
+          <div class="breakdown-row highlight">
+            <span class="breakdown-label bold">Score points</span>
+            <span id="scorePointsValue" class="breakdown-value bold">0</span>
+          </div>
+        </div>
+
+        <div class="result-footer">
+          <p class="footnote">
+            Hit Factor = score points &divide; time. Negative stage points are recorded as zero.
+          </p>
+          <div class="minor-scoring-note">
+            <span class="ipsc-tag">IPSC ACTION AIR</span>
+            <span>All divisions scored Minor: A=5, C=3, D=1, Miss/NS/Proc=-10</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Match Log Section -->
+    <section class="match-log-section">
+      <div class="log-header-bar">
+        <div class="log-title-group">
+          <span class="section-kicker">SAVED RUNS</span>
+          <h2 class="section-title">MATCH LOG</h2>
+        </div>
+
+        <div class="log-actions">
+          <button type="button" class="btn-secondary" onclick="exportCsv()">
+            EXPORT CSV
+          </button>
+          <button type="button" class="btn-export-pdf" onclick="printMatchLog()">
+            PRINT / EXPORT PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- Table Container -->
+      <div class="table-container">
+        <table class="match-table" id="matchTable">
+          <thead>
+            <tr>
+              <th>SHOOTER</th>
+              <th>STAGE</th>
+              <th>DIVISION</th>
+              <th>HITS BREAKDOWN</th>
+              <th>POINTS</th>
+              <th>TIME</th>
+              <th>HIT FACTOR</th>
+              <th>STAGE %</th>
+              <th class="col-actions">ACTION</th>
+            </tr>
+          </thead>
+          <tbody id="matchTableBody">
+            <tr class="empty-row" id="emptyStateRow">
+              <td colspan="9">No saved runs yet. Enter a score above to start the match log.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Match Log Controls (When runs exist) -->
+      <div class="log-bottom-bar" id="logBottomBar" style="display: none;">
+        <span id="logSummaryText" class="log-summary-text">Total Runs: 0</span>
+        <button type="button" class="btn-clear-log" onclick="clearMatchLog()">
+          CLEAR ALL RUNS
+        </button>
+      </div>
+    </section>
+  <!-- Printable Score Sheet Header (Visible only in Print / PDF export) -->
+  <div id="printHeaderBlock" class="print-header-block">
+    <div class="print-header-content">
+      <div class="print-brand-info">
+        <h1 class="print-brand-title">WARDADDY HICAPA BUILDS</h1>
+        <p class="print-brand-sub">IPSC ACTION AIR &bull; OFFICIAL MATCH SCORING SHEET</p>
+      </div>
+      <div class="print-meta-info">
+        <div class="print-meta-row"><strong>PRINT DATE:</strong> <span id="printDate">-</span></div>
+        <div class="print-meta-row"><strong>TOTAL RUNS:</strong> <span id="printRunCount">0</span></div>
+        <div class="print-meta-row"><strong>FORMULA:</strong> <span>Hit Factor = Points &divide; Time (Minor Scoring)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Toggle / Status Bar -->
+  <footer class="app-footer">
+    <div class="footer-left">
+      <span>WAR DADDY HICAPA BUILDS &bull; OFFICIAL MATCH SCORING UTILITY</span>
+    </div>
+    <div class="footer-right">
+      <button type="button" id="volumeModeBtn" class="btn-sound" onclick="cycleVolumeMode()" title="Adjust Range Audio Level">
+        🔊 Buzzer Level: <strong id="volumeModeText" style="color:var(--red-primary);">MAX (RANGE)</strong>
+      </button>
+      <button type="button" id="soundToggleBtn" class="btn-sound" onclick="toggleSound()">
+        <span id="soundIcon">🔊</span> Audio: <strong id="soundStatusText">ON</strong>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Notification Toast -->
+  <div id="toastNotification" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

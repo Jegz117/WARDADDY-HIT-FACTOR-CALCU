@@ -1,0 +1,22 @@
+{
+  "name": "wardaddy-hit-factor",
+  "version": "1.0.0",
+  "description": "IPSC Action Air Hit Factor Calculator for WarDaddy HiCapa Builds",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve .",
+    "dev": "python -m http.server 8199",
+    "build": "echo 'Static site ready for Vercel deployment'"
+  },
+  "keywords": [
+    "ipsc",
+    "action-air",
+    "hit-factor",
+    "calculator",
+    "airsoft",
+    "hicapa",
+    "practical-shooting"
+  ],
+  "author": "WarDaddy HiCapa Builds",
+  "license": "MIT"
+}
